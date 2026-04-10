@@ -1,0 +1,13 @@
+# Playwright / local browser testing artifacts
+.playwright-mcp/
+idealoom-desktop.png
+idealoom-mobile-banner.png
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

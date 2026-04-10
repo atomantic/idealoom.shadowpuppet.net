@@ -2,58 +2,385 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Idea Loom - Become an Idea Machine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#e65100">
+    <title>Idea Loom — Become an Idea Machine</title>
     <meta name="description" content="Daily creative brainstorming through guided prompts. Generate 10 ideas a day, build your creative muscle, and never run out of inspiration. Free with optional prompt packs.">
+
+    <!-- iOS Safari Smart App Banner — shows native install suggestion at top -->
+    <meta name="apple-itunes-app" content="app-id=6749868977">
+
+    <!-- Social sharing -->
+    <meta property="og:title" content="Idea Loom — Become an Idea Machine">
+    <meta property="og:description" content="Daily creative brainstorming through guided prompts. 10 ideas a day builds your creative muscle.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://idealoom.shadowpuppet.net/">
+    <meta property="og:image" content="https://idealoom.shadowpuppet.net/screenshots/home.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://idealoom.shadowpuppet.net/">
+
     <style>
+        :root {
+            --bg: #fefefe;
+            --hero-start: #fff7e6;
+            --hero-mid: #ffe0b2;
+            --hero-end: #ffcc80;
+            --brand: #e65100;
+            --brand-dark: #bf360c;
+            --ink: #333;
+            --ink-soft: #5d4037;
+            --muted: #795548;
+            --card-bg: #fff8e1;
+            --card-border: #ffe0b2;
+            --quote-bg: #fff3e0;
+            --cta-bg: #111;
+            --cta-ink: #fff;
+            --banner-bg: #fff8e1;
+            --banner-border: rgba(230, 81, 0, 0.25);
+            --badge-bg: rgba(255,255,255,0.55);
+            --badge-border: rgba(230, 81, 0, 0.3);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #1a1410;
+                --hero-start: #2a1a10;
+                --hero-mid: #3a2515;
+                --hero-end: #4a2f1a;
+                --brand: #ffab40;
+                --brand-dark: #ff8a50;
+                --ink: #f0e6d6;
+                --ink-soft: #d4c3a8;
+                --muted: #b8a088;
+                --card-bg: #2a1f15;
+                --card-border: #4a2f1a;
+                --quote-bg: #2a1f15;
+                --cta-bg: #f0e6d6;
+                --cta-ink: #1a1410;
+                --banner-bg: #2a1f15;
+                --banner-border: rgba(255, 171, 64, 0.3);
+                --badge-bg: rgba(0,0,0,0.35);
+                --badge-border: rgba(255, 171, 64, 0.3);
+            }
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; line-height: 1.6; background: #fefefe; }
-        .hero { background: linear-gradient(135deg, #fff7e6 0%, #ffe0b2 40%, #ffcc80 100%); color: #333; text-align: center; padding: 4rem 1rem 3rem; }
-        .hero h1 { font-size: 3rem; font-weight: 800; letter-spacing: -1px; color: #e65100; }
-        .hero .tagline { font-size: 1.3rem; margin-top: 0.5rem; color: #bf360c; }
-        .hero .subtitle { font-size: 1rem; margin-top: 1rem; color: #795548; }
-        .content { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
-        .badge { display: inline-block; background: #ff9800; color: white; font-weight: 700; font-size: 0.85rem; padding: 0.3rem 0.8rem; border-radius: 20px; margin-top: 1.5rem; }
-        .features { margin-top: 2rem; }
-        .features h2 { color: #e65100; font-size: 1.4rem; margin-bottom: 1rem; }
-        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-        @media (max-width: 500px) { .feature-grid { grid-template-columns: 1fr; } }
-        .feature { background: #fff8e1; border-radius: 12px; padding: 1rem; border: 1px solid #ffe0b2; }
-        .feature strong { color: #e65100; }
-        .feature p { font-size: 0.9rem; color: #5d4037; margin-top: 0.3rem; }
-        .screenshots { display: flex; justify-content: center; gap: 1.5rem; max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
-        .screenshots img { flex: 1; min-width: 0; max-width: 300px; height: auto; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+        html { -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--ink);
+            line-height: 1.6;
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100dvh;
+        }
+        a { color: var(--brand); }
+
+        /* ---------- Custom mobile install banner (shown on non-Safari mobile) ---------- */
+        .install-banner {
+            display: none;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--banner-bg);
+            border-bottom: 1px solid var(--banner-border);
+            padding: 0.65rem 0.85rem;
+            padding-top: max(0.65rem, env(safe-area-inset-top));
+            align-items: center;
+            gap: 0.75rem;
+            backdrop-filter: saturate(180%) blur(14px);
+            -webkit-backdrop-filter: saturate(180%) blur(14px);
+        }
+        .install-banner.visible { display: flex; }
+        .install-banner .close {
+            background: transparent;
+            border: 0;
+            color: var(--muted);
+            font-size: 1.4rem;
+            line-height: 1;
+            padding: 0.3rem 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .install-banner .close:hover { color: var(--brand); }
+        .install-banner .icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #ffb74d, #e65100);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 8px rgba(230, 81, 0, 0.25);
+        }
+        .install-banner .info { flex: 1; min-width: 0; }
+        .install-banner .info strong {
+            color: var(--brand);
+            font-size: 0.92rem;
+            display: block;
+            font-weight: 700;
+        }
+        .install-banner .info span {
+            font-size: 0.75rem;
+            color: var(--muted);
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .install-banner .get {
+            background: var(--brand);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            flex-shrink: 0;
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-mid) 45%, var(--hero-end) 100%);
+            text-align: center;
+            padding: clamp(2.5rem, 8vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 6vw, 3.5rem);
+        }
+        .hero h1 {
+            font-size: clamp(2.4rem, 9vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--brand);
+            line-height: 1.05;
+        }
+        .hero .tagline {
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            margin-top: 0.6rem;
+            color: var(--brand-dark);
+            font-weight: 600;
+        }
+        .hero .subtitle {
+            font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+            margin-top: 1rem;
+            color: var(--muted);
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero .cta {
+            margin-top: clamp(1.5rem, 4vw, 2.2rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        /* ---------- Apple-styled download badge ---------- */
+        .app-store-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--cta-bg);
+            color: var(--cta-ink);
+            text-decoration: none;
+            padding: 0.85rem 1.6rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+            min-height: 56px;
+        }
+        .app-store-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+        }
+        .app-store-badge:active { transform: translateY(0); }
+        .app-store-badge svg {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            fill: currentColor;
+        }
+        .app-store-badge .label {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            line-height: 1.1;
+        }
+        .app-store-badge .label .small {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+        .app-store-badge .label .big {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-top: 1px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            color: var(--brand);
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+        }
+
+        /* ---------- Screenshots ---------- */
+        .screenshots {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 960px;
+            margin: clamp(1.5rem, 4vw, 2rem) auto;
+            padding: 0 1rem;
+        }
+        .screenshots img {
+            flex: 1;
+            min-width: 0;
+            max-width: 280px;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
         @media (max-width: 600px) {
-            .screenshots { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; max-width: 100%; gap: 1rem; }
+            .screenshots {
+                justify-content: flex-start;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                max-width: 100%;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
             .screenshots::-webkit-scrollbar { display: none; }
             .screenshots img { flex: 0 0 75%; max-width: none; scroll-snap-align: start; }
         }
-        .quote { background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 8px; padding: 1rem; margin: 2rem 0; font-style: italic; color: #5d4037; }
-        .quote .author { font-style: normal; font-weight: 600; margin-top: 0.5rem; display: block; color: #e65100; }
-        .links { text-align: center; margin: 2rem 0 1rem; font-size: 0.9rem; }
-        .links a { color: #e65100; text-decoration: none; margin: 0 0.8rem; }
+
+        /* ---------- Content ---------- */
+        .content {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1rem, 4vw, 1.5rem);
+        }
+        .quote {
+            background: var(--quote-bg);
+            border-left: 4px solid var(--brand);
+            border-radius: 8px;
+            padding: 1.1rem 1.3rem;
+            margin: clamp(1rem, 3vw, 2rem) 0;
+            font-style: italic;
+            color: var(--ink-soft);
+            font-size: clamp(1rem, 3vw, 1.1rem);
+        }
+        .quote .author {
+            font-style: normal;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            display: block;
+            color: var(--brand);
+            font-size: 0.9rem;
+        }
+        .features { margin-top: clamp(1.5rem, 4vw, 2.5rem); }
+        .features h2 {
+            color: var(--brand);
+            font-size: clamp(1.3rem, 4vw, 1.6rem);
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .feature {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.1rem;
+            border: 1px solid var(--card-border);
+        }
+        .feature strong { color: var(--brand); font-size: 1rem; }
+        .feature p { font-size: 0.9rem; color: var(--ink-soft); margin-top: 0.35rem; }
+
+        .mid-cta {
+            text-align: center;
+            margin: clamp(2rem, 6vw, 3rem) 0 1rem;
+        }
+
+        .links {
+            text-align: center;
+            margin: 2rem 0 1rem;
+            font-size: 0.9rem;
+        }
+        .links a {
+            color: var(--brand);
+            text-decoration: none;
+            margin: 0 0.8rem;
+        }
         .links a:hover { text-decoration: underline; }
-        footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: #999; }
+
+        footer {
+            text-align: center;
+            padding: 1rem 1rem 2rem;
+            padding-bottom: max(2rem, env(safe-area-inset-bottom));
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; animation: none !important; }
+        }
     </style>
 </head>
 <body>
+    <!-- Custom install banner: shown on non-Safari mobile (Safari gets the native one via meta tag) -->
+    <div class="install-banner" id="installBanner" role="banner">
+        <button class="close" id="installBannerClose" aria-label="Dismiss install banner">&times;</button>
+        <div class="icon" aria-hidden="true">💡</div>
+        <div class="info">
+            <strong>Idea Loom</strong>
+            <span>Free on the App Store — iPhone &amp; iPad</span>
+        </div>
+        <a class="get" href="https://apps.apple.com/us/app/idea-loom/id6749868977">Get</a>
+    </div>
+
     <div class="hero">
         <h1>Idea Loom</h1>
         <div class="tagline">Become an Idea Machine</div>
         <div class="subtitle">Daily creative brainstorming through guided prompts. 10 ideas a day builds your creative muscle.</div>
-        <div class="badge">Free Core Pack &mdash; 200+ Prompts</div>
+        <div class="cta">
+            <a href="https://apps.apple.com/us/app/idea-loom/id6749868977" class="app-store-badge" aria-label="Download Idea Loom on the App Store">
+                <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+                </svg>
+                <span class="label">
+                    <span class="small">Download on the</span>
+                    <span class="big">App Store</span>
+                </span>
+            </a>
+            <div class="badge">Free Core Pack — 200+ Prompts</div>
+        </div>
     </div>
 
     <div class="screenshots">
-        <img src="screenshots/home.png" alt="Idea Loom Home Screen">
-        <img src="screenshots/ideation.png" alt="Idea Loom Ideation Session">
-        <img src="screenshots/prompts.png" alt="Idea Loom Prompt Library">
+        <img src="screenshots/home.png" alt="Idea Loom Home Screen" loading="lazy">
+        <img src="screenshots/ideation.png" alt="Idea Loom Ideation Session" loading="lazy">
+        <img src="screenshots/prompts.png" alt="Idea Loom Prompt Library" loading="lazy">
     </div>
 
     <div class="content">
         <div class="quote">
             "Become an idea machine"
-            <span class="author">&mdash; James Altucher</span>
+            <span class="author">— James Altucher</span>
         </div>
 
         <div class="features">
@@ -68,11 +395,11 @@
                     <p>Each session guides you to generate 10 ideas. Compound growth means 10 ideas daily adds up to 3,650 ideas per year.</p>
                 </div>
                 <div class="feature">
-                    <strong>Streaks & Achievements</strong>
+                    <strong>Streaks &amp; Achievements</strong>
                     <p>Track your daily streak, unlock 11 achievements, and build a lasting creative habit with gamified progress.</p>
                 </div>
                 <div class="feature">
-                    <strong>Favorites & Best Ideas</strong>
+                    <strong>Favorites &amp; Best Ideas</strong>
                     <p>Star your best ideas to curate a personal collection. Browse them anytime in a dedicated gallery.</p>
                 </div>
                 <div class="feature">
@@ -80,10 +407,22 @@
                     <p>Expand with 8 optional packs: Creative Writing, Disaster Prep, Family, Silly, Surreal, Tech Startup, Wellness, and more.</p>
                 </div>
                 <div class="feature">
-                    <strong>Export & Share</strong>
+                    <strong>Export &amp; Share</strong>
                     <p>Export completed idea lists to Apple Notes or share them anywhere. Your ideas, your way.</p>
                 </div>
             </div>
+        </div>
+
+        <div class="mid-cta">
+            <a href="https://apps.apple.com/us/app/idea-loom/id6749868977" class="app-store-badge" aria-label="Download Idea Loom on the App Store">
+                <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+                </svg>
+                <span class="label">
+                    <span class="small">Download on the</span>
+                    <span class="big">App Store</span>
+                </span>
+            </a>
         </div>
 
         <div class="links">
@@ -95,5 +434,34 @@
     <footer>
         &copy; 2026 ShadowPuppet, LLC. All rights reserved.
     </footer>
+
+    <script>
+        (function() {
+            var banner = document.getElementById('installBanner');
+            var closeBtn = document.getElementById('installBannerClose');
+            if (!banner || !closeBtn) return;
+
+            var DISMISSED_KEY = 'idealoom_install_banner_dismissed';
+            var ua = navigator.userAgent;
+            var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua) || window.innerWidth < 768;
+            var isIOS = /iPad|iPhone|iPod/.test(ua);
+            // Safari on iOS renders the native Smart App Banner from the meta tag — skip our custom one there.
+            var isSafari = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(ua);
+            var nativeBannerWillShow = isIOS && isSafari;
+
+            // localStorage can throw in private mode / sandboxed iframes — try/catch is necessary here.
+            var dismissed = false;
+            try { dismissed = window.localStorage.getItem(DISMISSED_KEY) === '1'; } catch (e) {}
+
+            if (isMobile && !nativeBannerWillShow && !dismissed) {
+                banner.classList.add('visible');
+            }
+
+            closeBtn.addEventListener('click', function() {
+                banner.classList.remove('visible');
+                try { window.localStorage.setItem(DISMISSED_KEY, '1'); } catch (e) {}
+            });
+        })();
+    </script>
 </body>
 </html>
