@@ -21,9 +21,13 @@
         .feature { background: #fff8e1; border-radius: 12px; padding: 1rem; border: 1px solid #ffe0b2; }
         .feature strong { color: #e65100; }
         .feature p { font-size: 0.9rem; color: #5d4037; margin-top: 0.3rem; }
-        .screenshots { text-align: center; margin: 2rem 0; }
-        .screenshots img { width: 180px; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin: 0 0.5rem; }
-        @media (max-width: 600px) { .screenshots img { width: 100px; margin: 0.3rem; } }
+        .screenshots { display: flex; justify-content: center; gap: 1.5rem; max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+        .screenshots img { flex: 1; min-width: 0; max-width: 300px; height: auto; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+        @media (max-width: 600px) {
+            .screenshots { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; max-width: 100%; gap: 1rem; }
+            .screenshots::-webkit-scrollbar { display: none; }
+            .screenshots img { flex: 0 0 75%; max-width: none; scroll-snap-align: start; }
+        }
         .quote { background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 8px; padding: 1rem; margin: 2rem 0; font-style: italic; color: #5d4037; }
         .quote .author { font-style: normal; font-weight: 600; margin-top: 0.5rem; display: block; color: #e65100; }
         .links { text-align: center; margin: 2rem 0 1rem; font-size: 0.9rem; }
@@ -40,13 +44,13 @@
         <div class="badge">Free Core Pack &mdash; 200+ Prompts</div>
     </div>
 
-    <div class="content">
-        <div class="screenshots">
-            <img src="screenshots/home.png" alt="Idea Loom Home Screen">
-            <img src="screenshots/ideation.png" alt="Idea Loom Ideation Session">
-            <img src="screenshots/prompts.png" alt="Idea Loom Prompt Library">
-        </div>
+    <div class="screenshots">
+        <img src="screenshots/home.png" alt="Idea Loom Home Screen">
+        <img src="screenshots/ideation.png" alt="Idea Loom Ideation Session">
+        <img src="screenshots/prompts.png" alt="Idea Loom Prompt Library">
+    </div>
 
+    <div class="content">
         <div class="quote">
             "Become an idea machine"
             <span class="author">&mdash; James Altucher</span>
